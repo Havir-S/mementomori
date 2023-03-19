@@ -6,9 +6,9 @@ module.exports = {
     fontFamily: {
       'cookie': ['Cookie', 'ui-sans-serif', 'system-ui'],
       'milonga': ['Milonga', 'ui-sans-serif', 'system-ui'],
-      'Tenor': ['Tenor Sans', 'ui-sans-serif', 'system-ui'],
+      'tenor': ['Tenor Sans', 'ui-sans-serif', 'system-ui'],
       
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms'),],
 }
