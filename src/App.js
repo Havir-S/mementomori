@@ -10,8 +10,7 @@ function App() {
   const [showType, setShowType] = useState('years')
   const [visualize, setVisualize] = useState('year')
   const todayDate = new Date();
-  const [firstDate, setFirstDate] = useState();
-  const [secondDate, setSecondDate] = useState();
+  
   
   return (
     <div className="App">
