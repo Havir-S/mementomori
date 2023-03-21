@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      gap: {
+        '129': '250px',
+        '130': '600px',
+      },
+    },
     fontFamily: {
       'cookie': ['Cookie', 'ui-sans-serif', 'system-ui'],
       'milonga': ['Milonga', 'ui-sans-serif', 'system-ui'],

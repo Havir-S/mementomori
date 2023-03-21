@@ -1,5 +1,5 @@
 import getDayOfTheYear from "./getDayOfTheYear";
-
+import getDifferenceInMonths from "./getDifferenceInMonths";
 
 
 const getDots = (todayDate, settings, dotType) => {
@@ -9,22 +9,20 @@ const getDots = (todayDate, settings, dotType) => {
     const currentMonth = todayDate.getMonth() + 1;
     switch (dotType) {
         case 'Years':
-            console.log('we giving years')
             filledDots = (currentYear - settings.yearBorn)
             dots = ((currentYear - settings.yearBorn) + settings.lifeYears) - filledDots
-            console.log(currentYear - settings.yearBorn)
             return [dots, filledDots]
         case 'Months':
-            console.log('we giving months')
-            filledDots = ((currentYear - settings.yearBorn) * 12) + currentMonth
-            dots = (settings.lifeYears * 12) - filledDots
-            console.log([dots, filledDots])
-            return [dots, filledDots]
+            // filledDots = ((currentYear - settings.yearBorn) * 12) + currentMonth
+            // dots = (settings.lifeYears * 12) - filledDots
+            const filledMonths = getDifferenceInMonths( new Date(`${settings.yearBorn}-${settings.monthBorn}-${settings.dayBorn}`), todayDate, )
+            const emptyMonths = (getDifferenceInMonths( todayDate, new Date(`${todayDate.getFullYear() + settings.lifeYears}-${todayDate.getMonth()}-${todayDate.getDay()}`)) - filledMonths)
+            console.log(filledMonths, emptyMonths)
+            return [filledMonths, emptyMonths]
+            // return [emptyMonths, filledMonths]
         case 'Days':
-            console.log('we giving days')
             filledDots = ((currentYear - settings.yearBorn) * 365) + getDayOfTheYear();
             dots = (settings.lifeYears * 365) - filledDots
-            console.log([dots, filledDots])
             return [dots, filledDots]
         default:
             return [dots, filledDots]

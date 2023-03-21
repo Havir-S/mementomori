@@ -1,7 +1,7 @@
 import React from 'react'
 import getDayOfTheYear from '../utils/getDayOfTheYear'
 
-function InputTable({todayDate, visualize, showType, setShowType, setSquares, setSquaresFilled, size,}) {
+function InputTable({todayDate, visualize, showType, setShowType, setSquares, setSquaresFilled,}) {
 
   const handleChange = (e) => {
     console.log(e.target.value)
@@ -25,7 +25,7 @@ function InputTable({todayDate, visualize, showType, setShowType, setSquares, se
     <div className='flex flex-col justify-around items-middle '>
         <div className='flex justify-center items-center gap-4'> 
           <span className='block'>I want to see:</span>
-          <select onChange={(e) => {handleChange(e)}} className="block cursor-pointer appearance-none  bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+          <select value={showType} onChange={(e) => {handleChange(e)}} className="block cursor-pointer appearance-none  bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
             <option>Months</option>
             <option>Days</option>
             {visualize === 'time' && (
