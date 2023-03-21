@@ -1,10 +1,25 @@
 import React from 'react'
+import getDayOfTheYear from '../utils/getDayOfTheYear'
 
-function InputTable({visualize, showType, setShowType}) {
+function InputTable({todayDate, visualize, showType, setShowType, setSquares, setSquaresFilled, size,}) {
 
   const handleChange = (e) => {
     console.log(e.target.value)
     setShowType(e.target.value)
+
+    if (visualize === 'year') {
+      switch (e.target.value) {
+        case 'Months':
+          setSquares(12);
+          setSquaresFilled(todayDate.getMonth() + 1)
+        return;
+        case 'Days':
+            setSquares((todayDate.getFullYear() % 4) ? 365 : 364);
+            setSquaresFilled(getDayOfTheYear())
+        return;
+        default: return;
+      }
+    }
   }
   return (
     <div className='flex flex-col justify-around items-middle '>
@@ -19,7 +34,7 @@ function InputTable({visualize, showType, setShowType}) {
             {/* <option>Hours</option> */}
           </select>
         </div>
-        <p className='font-milonga text-md italic text-white'>Each dot represents a {showType.slice(0,showType.length - 1)}.</p>
+        <p className='font-milonga text-center my-3 text-md italic text-white'>Each dot represents a {showType.slice(0,showType.length - 1)}.</p>
     </div>
   )
 }

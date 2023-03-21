@@ -1,17 +1,20 @@
 import React from 'react'
 
-function Grid({squares, size}) {
+function Grid({squares, squaresFilled, size}) {
   return (
     // <div className='w-fit mx-auto'>
-      <div className='flex flex-wrap flex-row items-start justify-left '>
+    <>
+      <div className='flex flex-wrap flex-row  h-fit   justify-left '>
           {
-              new Array(squares).fill(true).map((item, index) => index % 2 ? (
-                  <div key={index} className='circle xlCircle fullCircle' />
-              ) : (
-                <div key={index} className='circle xlCircle emptyCircle' />
-              ))
+              new Array(squaresFilled).fill(true).map((item, index) => <div key={index} className='circle xlCircle fullCircle' />)
           }
+          {
+              new Array((squares - squaresFilled)).fill(true).map((item, index) => <div key={index} className='circle xlCircle emptyCircle' />)
+          }
+
       </div>
+      
+    </>
     // </div>
   )
 }

@@ -7,11 +7,16 @@ function TimeBars() {
 
     const [second, setSecond] = useState(Math.floor((new Date().getSeconds() * 100) / 60))
 
+    const updateSecond = () => {
+      setSecond(Math.floor((new Date().getSeconds() * 100) / 60))
+      console.log('ding')
+  }
+
     useEffect(() => {
 
-      setInterval(() => {
-          setSecond(Math.floor((new Date().getSeconds() * 100) / 60))
-      }, 1000)
+      const interval = setInterval(updateSecond, 1000)
+
+      return () => (clearInterval(interval))
 
     }, [])
 
