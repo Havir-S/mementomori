@@ -17,7 +17,6 @@ const getDots = (todayDate, settings, dotType) => {
             // dots = (settings.lifeYears * 12) - filledDots
             const filledMonths = getDifferenceInMonths( new Date(`${settings.yearBorn}-${settings.monthBorn}-${settings.dayBorn}`), todayDate, )
             const emptyMonths = (getDifferenceInMonths( todayDate, new Date(`${todayDate.getFullYear() + settings.lifeYears}-${todayDate.getMonth()}-${todayDate.getDay()}`)) - filledMonths)
-            console.log(filledMonths, emptyMonths)
             return [filledMonths, emptyMonths]
             // return [emptyMonths, filledMonths]
         case 'Days':

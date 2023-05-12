@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react'
 
-function Grid({squares, squaresFilled, size}) {
-  // const squaresNumber = new Array((squares - squaresFilled)).fill(true)
-  // const squaresFilledNumber = new Array(squaresFilled).fill(true)
-  // useEffect(() => {
-  //   if (squares - squaresFilled <= 0) {
-  //     toggleEnd(true)
-  //   } else {
-  //     toggleEnd(false)
-  //   }
-  // }, [squares, squaresFilled])
+function Grid({calculatedYears, showDotType, visualize}) {
   return (
     <>
       <div className=' h-96 justify-left mx-auto w-5/6 '>
-      {((squares - squaresFilled) <= 0) ? (
-        <div>end</div>
-      ) : (
+      {visualize === 'time' ? (
         <>
-          {
-            squaresFilled > 0 && new Array(squaresFilled).fill(true).map((item, index) => <div key={index} className=' inline-block circle xlCircle fullCircle' />)
-          }
-          {
-            squares > 0 && new Array((squares - squaresFilled)).fill(true).map((item, index) => <div key={index} className=' inline-block circle xlCircle emptyCircle' />)
-          }
+        {
+          calculatedYears.timePassed[showDotType] >= 0 && new Array(calculatedYears.timePassed[showDotType]).fill(true).map((item, index) => <div key={index} className=' inline-block circle xlCircle fullCircle' />)
+        }
+        {
+          calculatedYears.timeToFuture[showDotType] >= 0 && new Array(calculatedYears.timeToFuture[showDotType]).fill(true).map((item, index) => <div key={index} className=' inline-block circle xlCircle emptyCircle' />)
+        }
         </>
-      )}
-          
-
+      ) : visualize === 'year' ? (
+        <>
+        {
+          calculatedYears.timePassed[showDotType] >= 0 && new Array(calculatedYears.timePassed[showDotType]).fill(true).map((item, index) => <div key={index} className=' inline-block circle xlCircle fullCircle' />)
+        }
+        {
+          calculatedYears.timeToFuture[showDotType] >= 0 && new Array(calculatedYears.timeToFuture[showDotType]).fill(true).map((item, index) => <div key={index} className=' inline-block circle xlCircle emptyCircle' />)
+        }
+        </>
+      ) : ''}
+        
       </div>
     </>
   )

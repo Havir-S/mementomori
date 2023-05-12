@@ -6,70 +6,48 @@ import TimeBars from './components/TimeBars';
 import InitialChoice from './components/InitialChoice';
 import TimePeriodChoose from './components/TimePeriodChoose';
 
-import getDots from './utils/getDots';
-import getDayOfTheYear from './utils/getDayOfTheYear';
+// import getDots from './utils/getDots';
+// import getDayOfTheYear from './utils/getDayOfTheYear';
 import LeftColumn from './components/LeftColumn/LeftColumn';
 import RightColumn from './components/RightColumn/RightColumn';
 
+import useDots from './utils/useDots'
+import getYearInfo from './utils/getYearInfo';
 
 function App() {
-  const todayDate = new Date();
+  const [bornDate, setBornDate] = useState(new Date())
+  const [additionalYears, setAdditionalYears] = useState(10)
+  const [calculatedThisYear, setCalculatedThisYear] = useState(getYearInfo())
+  const [ calculatedYears, calculateYears ] = useDots({
+    bornDate,
+    additionalYears
+  });
+  const [visualize, setVisualize] = useState('time')  /// TIME / YEAR
 
-  const [squares, setSquares] = useState(12)
-  const [squaresFilled, setSquaresFilled] = useState(todayDate.getMonth() + 1)
-  const [size, setSize] = useState(16)
-  
+  /// get data for the current year
+  useEffect(() => {
+    if (visualize === 'year') {
+      const x = getYearInfo()
+      setCalculatedThisYear(x)
+      
+    }
+  }, [visualize])
 
-  const [showType, setShowType] = useState('Months')
-  const [visualize, setVisualize] = useState('time')
   const [initialChoice, toggleInitialChoice] = useState(true);
 
-  const [settings, handleSettings] = useState(
-    {
-      yearBorn: 2000,
-      monthBorn: 1,
-      dayBorn: 1,
-      lifeYears: 80
-    }
-  );
 
-  useEffect(() => {console.log(settings)}, [settings])
+  /// function that is gonna be called everytime values change
+  const calculateNewDots = () => {
+    calculateYears({
+      bornDate,
+      additionalYears
+    })
+  }
 
-  ///change dots when settings change and we show the ear
+  ///trigger the hook each time the values are changed
   useEffect(() => {
-    if (visualize === 'time') {
-
-      /// set new dots everytime settings change
-      const [newSquaresFilled, newSquares] = getDots(todayDate, settings, showType)
-      setSquares(newSquares)
-      setSquaresFilled(newSquaresFilled)
-
-
-
-      ///////////////////////////////////////////////// THIS IS THE YEAR PART, DON'T TOUCH ,ALL IS WORKING WELL
-      ///restart the dots on changing to 'year'
-    } else if (visualize === 'year') {
-      ///years option - can't appear when we are only looking at the current year
-      if (showType === 'years') {
-        setShowType('months')
-        setSquares(12);
-        setSquaresFilled(todayDate.getMonth() + 1)
-        return;
-      }
-
-      switch (showType) {
-        case 'Months':
-          setSquares(12);
-          setSquaresFilled(todayDate.getMonth() + 1)
-        return;
-        case 'Days':
-            setSquares((todayDate.getFullYear() % 4) ? 365 : 364);
-            setSquaresFilled(getDayOfTheYear())
-        return;
-        default: return;
-      }
-    }
-  }, [showType, visualize, settings])
+    calculateNewDots()
+  }, [bornDate, additionalYears])
   
   return (
     <div className="App">
@@ -84,9 +62,9 @@ function App() {
           <InitialChoice toggleInitialChoice={toggleInitialChoice} setVisualize={setVisualize}/>
         ): (
           <div className='flex flex-col lg:flex-row lg:gapBox lg:justify-around items-center lg:items-stretch w-5/6 h-3/4 mx-auto mt-6'>
-            <LeftColumn setVisualize={setVisualize} visualize={visualize} todayDate={todayDate} settings={settings} handleSettings={handleSettings} />
+            <LeftColumn setBornDate={setBornDate} setAdditionalYears={setAdditionalYears} calculateNewDots={calculateNewDots} setVisualize={setVisualize} visualize={visualize} />
 
-            <RightColumn  squares={squares} showType={showType} setShowType={setShowType} setSquares={setSquares} setSquaresFilled={setSquaresFilled} squaresFilled={squaresFilled} size={size} setVisualize={setVisualize} visualize={visualize} todayDate={todayDate} handleSettings={handleSettings}  />
+            <RightColumn visualize={visualize} calculatedYears={visualize === 'year' ? calculatedThisYear : calculatedYears } />
             
           </div>
         )}

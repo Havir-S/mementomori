@@ -9,7 +9,6 @@ function TimeBars() {
 
     const updateSecond = () => {
       setSecond(Math.floor((new Date().getSeconds() * 100) / 60))
-      console.log('ding')
   }
 
     useEffect(() => {
